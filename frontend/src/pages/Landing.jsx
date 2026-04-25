@@ -59,6 +59,7 @@ export default function Landing() {
                 value={form.username}
                 onChange={e => setForm(f => ({ ...f, username: e.target.value }))}
                 required
+                autoComplete="username"
               />
             </div>
           )}
@@ -71,6 +72,7 @@ export default function Landing() {
               value={form.email}
               onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
               required
+              autoComplete={mode === 'login' ? 'username' : 'email'}
             />
           </div>
           <div className="form-group">
@@ -82,6 +84,7 @@ export default function Landing() {
               value={form.password}
               onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
               required
+              autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
             />
           </div>
 
