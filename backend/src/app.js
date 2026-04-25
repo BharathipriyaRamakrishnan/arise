@@ -18,7 +18,14 @@ const { DEFAULT_DAILY_QUESTS, DIFFICULTY_XP, DIFFICULTY_COINS } = require('./uti
 const app = express();
 
 // ─── Middleware ───────────────────────────────────────────────────────────────
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
+app.use(cors({ 
+  origin: [
+    'http://localhost:5173', 
+    'https://ariselevelup.vercel.app',
+    process.env.FRONTEND_URL
+  ].filter(Boolean), 
+  credentials: true 
+}));
 app.use(express.json());
 
 // ─── Routes ──────────────────────────────────────────────────────────────────
