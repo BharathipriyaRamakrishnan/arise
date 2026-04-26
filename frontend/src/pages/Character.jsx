@@ -2,6 +2,7 @@ import { useAuth } from '../context/AuthContext';
 import StatBars from '../components/StatBars';
 import RadarChart from '../components/RadarChart';
 import XPBar from '../components/XPBar';
+import { playerAPI } from '../services/api';
 
 const SKILLS_DATA = {
   warrior: [
@@ -109,6 +110,31 @@ export default function Character() {
               <div className="section-title">STAT XP</div>
               <StatBars stats={player.statXP || {}} />
             </div>
+          </div>
+
+          {/* Danger Zone */}
+          <div className="card" style={{ borderColor: 'rgba(239, 68, 68, 0.3)', background: 'linear-gradient(to right, rgba(239, 68, 68, 0.05), transparent)' }}>
+            <div className="section-title" style={{ color: '#ef4444' }}>DANGER ZONE</div>
+            <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: 16 }}>
+              Resetting your hunter will wipe all stats, quests, bosses, and class progression. You will start anew at the onboarding screen. This action cannot be undone.
+            </p>
+            <button 
+              onClick={async () => {
+                const confirmed = window.confirm('Are you absolutely sure you want to reset your hunter? ALL progress will be lost!');
+                if (confirmed) {
+                  try {
+                    await playerAPI.reset();
+                    window.location.reload();
+                  } catch (err) {
+                    alert('Failed to reset hunter');
+                  }
+                }
+              }}
+              className="btn" 
+              style={{ background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', border: '1px solid rgba(239, 68, 68, 0.3)', width: '100%' }}
+            >
+              🔥 Reset Hunter Progress
+            </button>
           </div>
         </div>
 

@@ -40,6 +40,7 @@ export const playerAPI = {
   get:        ()     => api.get('/player'),
   stats:      ()     => api.get('/player/stats'),
   story:      ()     => api.get('/player/story'),
+  reset:      ()     => api.put('/player/reset'),
 };
 
 // ─── Quests ───────────────────────────────────────────────────────────────────

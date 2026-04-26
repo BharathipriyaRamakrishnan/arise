@@ -24,9 +24,8 @@ const bossSchema = new mongoose.Schema({
   loot: [{ type: String }],  // badge IDs awarded on win
 }, { timestamps: true });
 
-bossSchema.pre('save', function (next) {
+bossSchema.pre('save', function () {
   if (this.isNew) this.currentHP = this.maxHP;
-  next();
 });
 
 module.exports = mongoose.model('Boss', bossSchema);

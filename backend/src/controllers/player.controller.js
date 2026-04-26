@@ -105,4 +105,24 @@ const getStatsSummary = async (req, res) => {
   }
 };
 
-module.exports = { createPlayer, getPlayer, getStory, getStatsSummary };
+const Quest = require('../models/Quest');
+const Boss = require('../models/Boss');
+const Transaction = require('../models/Transaction');
+
+// PUT /api/player/reset
+const resetPlayer = async (req, res) => {
+  try {
+    await Quest.deleteMany({ userId: req.user._id });
+    await Boss.deleteMany({ userId: req.user._id });
+    await Transaction.deleteMany({ userId: req.user._id });
+
+    req.user.player = null; // Forces them through onboarding again
+
+    await req.user.save();
+    res.json({ message: 'Hunter reset successfully' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+module.exports = { createPlayer, getPlayer, getStory, getStatsSummary, resetPlayer };
