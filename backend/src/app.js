@@ -125,8 +125,12 @@ cron.schedule('0 0 * * *', async () => {
 });
 
 // ─── Start ────────────────────────────────────────────────────────────────────
-connectDB().then(() => {
+connectDB();
+
+if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
   app.listen(process.env.PORT || 5000, () => {
     console.log(`🚀 Arise API running on port ${process.env.PORT || 5000}`);
   });
-});
+}
+
+module.exports = app;
